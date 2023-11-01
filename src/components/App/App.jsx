@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchContent());
-  }, [dispatch]);
+  });
 
   if (isLoading) {
     return 'loading...'

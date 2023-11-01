@@ -1,0 +1,7 @@
+.mouseCoordinates {
+  position: absolute;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #ccc;
+  display: none;
+}

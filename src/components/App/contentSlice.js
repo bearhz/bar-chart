@@ -14,7 +14,8 @@ export const fetchContent = createAsyncThunk(
 
       // 读取返回状态，如果不是200，抛出错误
       if(response.status !== 200){
-        throw new Error(`Response status is ${response.status}`);
+        console.log(response.status);
+        // throw new Error(`Response status is ${response.status}`);
       }
 
       // 读取返回数据并返回给回调
@@ -23,7 +24,7 @@ export const fetchContent = createAsyncThunk(
       return data
     } catch (error) {
       // 如果HTTP返回错误，则输出错误
-      console.log(error);
+      // console.log(error);
     }
   }
 )
@@ -32,7 +33,7 @@ export const contentSlice = createSlice({
   name: 'content',
   // 状态：数据、是否在加载、错误
   initialState: {
-    contents: {},
+    contents: null,
     isLoading: false,
     error: null,
   },
