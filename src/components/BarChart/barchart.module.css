@@ -1,0 +1,7 @@
+.container{
+  display: flex;
+  padding: 20px;
+}
+svg{
+  min-height: 100%;
+}
