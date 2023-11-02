@@ -14,7 +14,7 @@ export default function BarChart() {
   // 加载DOM后发HTTP请求获取数据
   useEffect(() => {
     dispatch(fetchContent());
-  }, []);
+  }, [dispatch]);
 
   // 当contents更新时，调用useEffect，运行d3代码
   useEffect(() => {
@@ -78,13 +78,21 @@ export default function BarChart() {
         .attr('opacity', 0.6)
         .attr('height', (d, i) => { return yOrigin - yScale(d[1]) })
         .attr('width', barWidth)
-
-      // 创建x坐标轴
+      // console.log('bar length = ', bar._groups[0].length);
+      // 创建x坐标轴，只显示5倍数的年份;并输出年份对应的数据序号
+      // 创建存储不需要输出的数据序号
+      let onIndex = [];
+      let onYears = [];
       var x_axis = d3.axisBottom(xScale)
         .tickFormat((d, i) => {
+          // 从YYYY-MM-DD转化成YYYY
           d = d.substring(0, 4);
-          if (i % 20 === 0) {
-            d = d;
+          // 把字符串转化成整数
+          const year = parseInt(d);
+          // 只保留显示第一个季度的年；并且，如果year是5的整数倍，比如1945或1950，则保留，否则设置为空字符
+          if (i % 4 === 0 && year % 5 === 0) {
+            onIndex.push(i);
+            onYears.push(year);
           } else {
             d = '';
           }
@@ -96,12 +104,30 @@ export default function BarChart() {
       svg.append('g')
         .attr('transform', `translate(0, ${yOrigin})`)
         .call(x_axis);
-
+        
       svg.append('g')
         .attr('transform', `translate(${xOrigin}, 0)`)
         .call(y_axis);
+
+      // 修改坐标轴上的刻度线
+      // 通过查看网页的source，可以发现刻度线的元素为svg/g/g.tick/line，通过选择、设置不显示
+      svg.selectAll('g.tick line')
+        .filter((d, i) => {
+          if (!onIndex.includes(i)) {
+            return d;
+          }
+        })
+        .style('display', 'none');
+      // 修改x的坐标轴线，通过修改path里面的d，去掉最后的V6（向下划线6px），从而删掉终止刻度线
+      svg.select('path.domain')
+        .attr('d', "M50,6V0H750");
+
+      return ()=>{
+        // 更新数据前删除所有过去的内容        
+        svg.selectAll('*').remove();
+      }
     }
-  }, [contents])
+  }, [contents, isLoading])
 
 
   return (
