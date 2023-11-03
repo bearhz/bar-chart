@@ -113,10 +113,20 @@ export default function BarChart() {
         dataBoxRect.attr('width', dataBox.w)
           .attr('height', dataBox.h)
           .attr('fill', dataBox.color)
-          .attr('opacity', dataBox.opacity)
+          .attr('opacity', 0)
+          .classed(styles.dataBox, true);
+        dataBoxRect.transition()
+          .transition()
+          .duration(300)
+          .style("opacity", dataBox.opacity);
+
         dataBoxDate.text(`${convertToQuarter(d[0])}`)
           .attr('transform', 'translate(0, 20)')
-          .classed(styles.dataBox, true);
+          .classed(styles.dataBox, true)
+          .attr('fill-opacity', 0)
+          .transition()
+          .duration(500)
+          .style("fill-opacity", 1);
 
         // 数据转换成美元显示
         const usd = d[1].toLocaleString('en-US', {
@@ -126,10 +136,26 @@ export default function BarChart() {
 
         dataBoxValue.text(`  ${usd} Billion`)
           .attr('transform', 'translate(0, 40)')
-          .classed(styles.dataBox, true);
+          .classed(styles.dataBox, true)
+          .attr('fill-opacity', 0)
+          .transition()
+          .duration(500)
+          .style("fill-opacity", 1);
       })
         .on("mouseout", function (d) {
           d3.select(this).attr("fill", "#33ADFF");
+          dataBoxRect.transition()
+            .transition()
+            .duration(100)
+            .style("opacity", 0);
+          dataBoxDate.transition()
+            .transition()
+            .duration(200)
+            .style("fill-opacity", 0);
+          dataBoxValue.transition()
+            .transition()
+            .duration(200)
+            .style("fill-opacity", 0);
         });
       // console.log('bar length = ', bar._groups[0].length);
       // 创建x坐标轴，只显示5倍数的年份;并输出年份对应的数据序号
