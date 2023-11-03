@@ -43,7 +43,10 @@ export default function BarChart() {
       const xEnd = padding + width; // 显示数据终点的x坐标
       const titlePos = { x: xOrigin + padding * 2.5, y: yEnd };
       const titleText = "United States GDP";
-      const yLabel = { x: xOrigin + width / 2.2, y: yOrigin + padding / 2, text: 'Year' };
+      const yLabel = {
+        x: xOrigin + width / 2.8, y: yOrigin + padding / 2,
+        text: 'More Information: http://www.bea.gov/national/pdf/nipaguid.pdf'
+      };
       const xLabel = { x: xOrigin + 20, y: yEnd + padding * 1.7, text: 'Gross Domestic Product' };
       const dataBox = { w: 140, h: 50, color: 'gray', opacity: 0.4 };
       // console.log(contents);
@@ -101,8 +104,8 @@ export default function BarChart() {
         const rect = d3.select(this);
         // console.log(this);// 这里必须要选择rect，后面改变颜色的程序才能正确运行
         // 修改颜色
-        rect.attr("fill", "red");
-        
+        rect.attr("fill", "white");
+
         // 获取鼠标位置
         const x = event.x;
         // 添加数据响应窗口属性：添加位置、颜色和文字
@@ -125,9 +128,9 @@ export default function BarChart() {
           .attr('transform', 'translate(0, 40)')
           .classed(styles.dataBox, true);
       })
-      .on("mouseout", function (d) {
-        d3.select(this).attr("fill", "#33ADFF");
-      });
+        .on("mouseout", function (d) {
+          d3.select(this).attr("fill", "#33ADFF");
+        });
       // console.log('bar length = ', bar._groups[0].length);
       // 创建x坐标轴，只显示5倍数的年份;并输出年份对应的数据序号
       // 创建存储不需要输出的数据序号
