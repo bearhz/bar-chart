@@ -1,12 +1,28 @@
 .container{
   display: flex;
-  /* padding: 20px; */
   background-color: white;
 }
+
 svg{  
   border: solid 1px red;
 }
 
 .hideXtick line{
   display: none;
+}
+
+.textFontSizeM {
+  font-size: 1em;
+}
+
+.textFontSizeL{
+  font-size: 2em;
+}
+
+.textFont{
+  font-family: sans-serif;
+}
+
+.dataBox{
+  text-align: center;
 }
