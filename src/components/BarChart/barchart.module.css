@@ -4,7 +4,7 @@
 }
 
 svg{  
-  border: solid 1px red;
+  box-shadow: 0 0 5px 5px #555;
 }
 
 .hideXtick line{
