@@ -99,7 +99,7 @@ export default function BarChart() {
       rect.on("mouseover", function (event, d) {
         // 获取事件源
         const rect = d3.select(this);
-        console.log(this);
+        // console.log(this);// 这里必须要选择rect，后面改变颜色的程序才能正确运行
         // 修改颜色
         rect.attr("fill", "red");
         
