@@ -83,7 +83,7 @@ export default function BarChart() {
         })
 
       // 画bar为矩形
-      bar.append('rect')
+      let rect = bar.append('rect')
         .attr('fill', '#33ADFF')
         .attr('opacity', 0.6)
         .attr('height', (d, i) => { return yOrigin - yScale(d[1]) })
@@ -96,9 +96,10 @@ export default function BarChart() {
       let dataBoxDate = dataBoxGroup.append('text');
       let dataBoxValue = dataBoxGroup.append('text');
       // 处理事件
-      bar.on("mouseover", function (event, d) {
+      rect.on("mouseover", function (event, d) {
         // 获取事件源
         const rect = d3.select(this);
+        console.log(this);
         // 修改颜色
         rect.attr("fill", "red");
         
